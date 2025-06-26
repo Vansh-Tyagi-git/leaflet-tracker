@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Leaflet Map Example</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+  <style>
+    body {
+    padding: 0;
+    margin: 0;
+    }
+    html, body, #map {
+        height: 100%;
+        width: 100vw;
+    }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
+    <script>
+
+        const map = L.map('map').setView([20.5937, 78.9629], 13);//logitude, ladtitude, zoom. of indian coordintes
+
+        //using OSM tile layer. we can use other provider as well
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        let marker = L.marker([20.5937, 78.9629]).addTo(map);
+        //const socket = io();//connect to the server
+
+        //browser sending location every 5 seconds
+        setInterval(()=>{
+          navigator.geolocation.getCurrentPosition((position)=>{
+            const lat = position.coords.latitude;
+            const lng = position.coords.longitude;
+            marker.setLatLng([lat,lng]);
+            map.setView([lat,lng], 13);
+          },(err)=>{
+            alert(`plz check you connection: ${err.message}`);
+          },{
+            enableHighAccuracy: true
+          })
+        }, 5000);
+
+
+    </script>
+</body>
+</html>
