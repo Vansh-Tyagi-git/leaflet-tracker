@@ -44,14 +44,14 @@
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
             marker.setLatLng([lat,lng]);
-            map.setView([lat,lng], 13);
+            map.setView([lat,lng]);
           },(err)=>{
             alert(`plz check you connection: ${err.message}`);
           },{
             enableHighAccuracy: true
           })
         }, 5000);
-
+git 
 
     </script>
 </body>
